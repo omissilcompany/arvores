@@ -1,0 +1,29 @@
+<!doctype html><html lang="pt-br"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ver no seu ambiente | O.Míssil</title>
+<script type="module" src="model-viewer.min.js"></script>
+<style>
+body{margin:0;font-family:system-ui,Arial,sans-serif;background:#F7F5F2;color:#071A45;text-align:center}
+header{background:#071A45;color:#fff;padding:18px}header b{color:#F5A623;letter-spacing:2px;font-size:12px;display:block}
+h1{margin:6px 0 0;font-size:22px}
+model-viewer{width:100%;height:68vh;background:#F7F5F2}
+.ar{background:#F5A623;color:#05070D;border:0;border-radius:999px;padding:14px 26px;font-size:16px;font-weight:700;position:absolute;bottom:18px;left:50%;transform:translateX(-50%)}
+p{margin:12px 16px;font-size:14px;color:#5B6576}
+</style></head><body>
+<header><a href="./" style="color:#F5A623;font-size:12px;text-decoration:none;float:left">← todas</a><b>VER NO SEU AMBIENTE</b><h1 id="t">Árvore de Natal</h1></header>
+<model-viewer id="mv" ar ar-modes="scene-viewer quick-look webxr" ar-scale="fixed" camera-controls touch-action="pan-y" shadow-intensity="1" alt="Árvore de Natal em 3D">
+<button slot="ar-button" class="ar">📱 Ver na minha casa</button></model-viewer>
+<p id="dica">Aponte a câmera para o chão. A árvore aparece em tamanho real.</p>
+<div id="grade" style="display:none;padding:16px;display:none;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;max-width:900px;margin:0 auto"></div>
+<script>
+const N={"01":"Pinheiro Nevado com Pinhas","02":"Árvore com Frutinhas Vermelhas","03":"Árvore Nevada com Pinhas","04":"Árvore Branca Nevada","05":"Árvore Verde Geada","06":"Árvore Gigante com Estrela","07":"Árvore Verde com Pinhas","08":"Árvore Verde Nevada"};
+const F={"01":"01-pinheiro-nevado-pinhas-2-10m","02":"02-frutinhas-vermelhas-2-10m","03":"03-nevada-pinhas-2-10m","04":"04-branca-nevada-2-10m","05":"05-verde-geada-2-10m","06-3m":"06-gigante-estrela-3m","06-4m":"06-gigante-estrela-4m","07":"07-verde-pinhas-2-10m","08":"08-verde-nevada-2-10m"};
+const q0=new URLSearchParams(location.search).get("a");
+if(!q0){document.getElementById("mv").style.display="none";document.getElementById("dica").textContent="Escolha a árvore para ver em tamanho real na sua casa:";document.getElementById("t").textContent="Escolha sua árvore";
+document.querySelector("header a").style.display="none";const g=document.getElementById("grade");g.style.display="grid";
+const C=[["01","2,10 m"],["02","2,10 m"],["03","2,10 m"],["04","2,10 m"],["05","2,10 m"],["06-3m","3 m"],["06-4m","4 m"],["07","2,10 m"],["08","2,10 m"]];
+const T={"01":"01-pinheiro-nevado-pinhas","02":"02-frutinhas-vermelhas","03":"03-nevada-pinhas","04":"04-branca-nevada","05":"05-verde-geada","06":"06-gigante-estrela","07":"07-verde-pinhas","08":"08-verde-nevada"};
+g.innerHTML=C.map(([k,h])=>`<a href="?a=${k}" style="background:#fff;border-radius:16px;padding:10px;text-decoration:none;color:#071A45;box-shadow:0 4px 14px rgba(7,26,69,.08)"><img src="fotos/${T[k.slice(0,2)]}.jpg" style="width:100%;height:170px;object-fit:contain"><b style="display:block;font-size:13px;margin-top:6px">${N[k.slice(0,2)]}</b><span style="font-size:12px;color:#F5A623;font-weight:700">${h}</span></a>`).join("");}
+const q=q0||"01", f=F[q]||F["01"];
+const mv=document.getElementById("mv");mv.src="modelos/"+f+".glb";mv.setAttribute("ios-src","modelos/"+f+".usdz");
+if(q0)document.getElementById("t").textContent=(N[q.slice(0,2)]||"Árvore de Natal")+" · "+(q.includes("-")?q.split("-")[1].replace("m"," m"):"2,10 m");
+</script></body></html>
